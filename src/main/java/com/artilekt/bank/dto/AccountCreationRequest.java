@@ -8,7 +8,7 @@ public class AccountCreationRequest {
 	
 	private BigDecimal initialBalance;
 	private AccountType accountType;
-	private String ownerDriverLicense;
+	private String clientId;
 
 	public BigDecimal getInitialBalance() {
 		return initialBalance;
@@ -18,8 +18,8 @@ public class AccountCreationRequest {
 		return accountType;
 	}
 	
-	public AccountType getOwnerDriverLicense() {
-		return accountType;
+	public String getClientId() {
+		return clientId;
 	}
 	
 	
