@@ -3,12 +3,23 @@ package com.artilekt.bank.business;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.artilekt.bank.business.FeeCalculator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Provider;
+
+@Component
+@Scope("prototype")
 public class Account implements Serializable {
 	private BigDecimal balance = new BigDecimal("0.00");
 	private String accountNumber;
@@ -18,22 +29,26 @@ public class Account implements Serializable {
 	
 	private AccountType accountType = AccountType.CHECKING;
 	private TxnCallback txnCallback = TxnCallback.NOOP;
+
+	@Autowired
 	private FeeCalculator feeCalculator = FeeCalculator.ZERO_FEE_CALCULATOR;
-	
+
 	private Client owner;
 	
 	private Logger logger = LoggerFactory.getLogger(Account.class);
 	
 	public Account() {}
-	
+
+
 	public Account(String accountNumber) {
 		this(accountNumber, BigDecimal.ZERO, AccountType.CHECKING);
 	}
 
+
 	public Account(String accountNumber, BigDecimal balance) {
 		this(accountNumber, balance, AccountType.CHECKING);
 	}
-	
+
 	public Account(String accountNumber, BigDecimal balance, AccountType accountType) {
 		this.balance = balance;
 		this.accountType = accountType;
@@ -112,6 +127,16 @@ public class Account implements Serializable {
 		txnCounter++;
 	}
 
+
+
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType;
+	}
 	//===============
 	private class ExcLoggingTCProxy implements TxnCallback {
 		private TxnCallback txnCallback;
@@ -138,11 +163,31 @@ public class Account implements Serializable {
 		
 	}
 
-	public void setFeeCalculator(FeeCalculator feeCalculator) {
-		this.feeCalculator = feeCalculator;
-	}
-
 	public void setOwner(Client owner) { this.owner = owner; }
 	public Client getOwner() { return owner; }
+
+
+
+	public interface Creator {
+		Account createAccount(BigDecimal balance, AccountType accountType);
+	}
+
+	@Component("accountFactory")
+	public static class Factory implements Creator {
+		@Autowired
+		private Provider<Account> accountGenerator;
+
+		@Autowired
+		private AccountNumberGenerator accountNumberGenerator;
+
+		@Override
+		public Account createAccount(BigDecimal balance, AccountType accountType) {
+			Account acc = accountGenerator.get();
+			acc.accountNumber = accountNumberGenerator.generateAccountNumber();
+			acc.balance = balance;
+			acc.accountType = accountType;
+			return acc;
+		}
+	}
 
 }

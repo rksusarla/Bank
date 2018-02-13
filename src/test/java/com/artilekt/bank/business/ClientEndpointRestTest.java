@@ -2,6 +2,7 @@ package com.artilekt.bank.business;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.get;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import org.junit.Before;
@@ -13,6 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.*;
+
 import static org.hamcrest.Matchers.*;
 
 import io.restassured.RestAssured;
@@ -56,6 +60,21 @@ public class ClientEndpointRestTest {
 		       	     "lastName", hasItem("Olenin"),
 		             "firstName", not(hasItem("Dmitri")));
     }
+    
+    @Test
+    public void createClient() throws Exception {
+        given()
+        	.contentType("application/json")
+        	.body(new Client("James", "Smith", "b001"))
+        .when()
+        	.post("/clients").
+	    then().
+	        statusCode(200);
+
+        Client client = get("/clients/b001").as(Client.class);
+        assertThat(client.getLastName()).isEqualTo("Smith");
+    }
+
     
 
 }

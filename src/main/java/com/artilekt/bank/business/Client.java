@@ -3,6 +3,9 @@ package com.artilekt.bank.business;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Client implements Serializable {
 
 	private String firstName;

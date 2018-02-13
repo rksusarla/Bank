@@ -1,10 +1,9 @@
 {
-	"variables": [],
 	"info": {
 		"name": "Bank App",
 		"_postman_id": "2046ff59-c756-df4f-6cf7-bb8eef618cd5",
 		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -14,7 +13,6 @@
 				{
 					"name": "localhost:8080/clients",
 					"request": {
-						"url": "localhost:8080/clients",
 						"method": "POST",
 						"header": [
 							{
@@ -31,31 +29,15 @@
 							"mode": "raw",
 							"raw": "{\n   \"firstName\":\"Vlad\",\n   \"lastName\": \"Olenin\",\n   \"driverLicense\": \"a001\"\n}"
 						},
-						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "localhost:8080/clients",
-					"request": {
-						"url": "localhost:8080/clients",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"description": "",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n   \"firstName\":\"Dmitri\",\n   \"lastName\": \"Olenin\",\n   \"driverLicense\": \"a002\"\n}"
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
 						},
 						"description": null
 					},
@@ -64,7 +46,39 @@
 				{
 					"name": "localhost:8080/clients",
 					"request": {
-						"url": "localhost:8080/clients",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"firstName\":\"Dmitri\",\n   \"lastName\": \"Olenin\",\n   \"driverLicense\": \"a002\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/clients",
+					"request": {
 						"method": "POST",
 						"header": [
 							{
@@ -81,6 +95,16 @@
 							"mode": "raw",
 							"raw": "{\n   \"firstName\":\"John\",\n   \"lastName\": \"Smith\",\n   \"driverLicense\": \"a003\"\n}"
 						},
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						},
 						"description": null
 					},
 					"response": []
@@ -88,7 +112,6 @@
 				{
 					"name": "localhost:8080/clients",
 					"request": {
-						"url": "localhost:8080/clients",
 						"method": "POST",
 						"header": [
 							{
@@ -105,6 +128,16 @@
 							"mode": "raw",
 							"raw": "{\n   \"firstName\":\"Jane\",\n   \"lastName\": \"Smith\",\n   \"driverLicense\": \"a004\"\n}"
 						},
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						},
 						"description": null
 					},
 					"response": []
@@ -118,7 +151,6 @@
 				{
 					"name": "Create duplicate client",
 					"request": {
-						"url": "localhost:8080/clients",
 						"method": "POST",
 						"header": [
 							{
@@ -135,6 +167,16 @@
 							"mode": "raw",
 							"raw": "{\n   \"firstName\":\"Vlad\",\n   \"lastName\": \"Olenin\",\n   \"driverLicense\": \"a001\"\n}"
 						},
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						},
 						"description": null
 					},
 					"response": []
@@ -148,10 +190,19 @@
 				{
 					"name": "get all clients",
 					"request": {
-						"url": "localhost:8080/clients",
 						"method": "GET",
 						"header": [],
 						"body": {},
+						"url": {
+							"raw": "localhost:8080/clients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients"
+							]
+						},
 						"description": null
 					},
 					"response": []
@@ -159,6 +210,9 @@
 				{
 					"name": "search by last name",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/clients?lastName=olenin",
 							"host": [
@@ -172,15 +226,10 @@
 								{
 									"key": "lastName",
 									"value": "olenin",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": null
 					},
 					"response": []
@@ -188,6 +237,9 @@
 				{
 					"name": "search by last name and dr lic",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/clients?lastName=olenin&driverLicense=a001",
 							"host": [
@@ -201,21 +253,15 @@
 								{
 									"key": "lastName",
 									"value": "olenin",
-									"equals": true,
-									"description": ""
+									"equals": true
 								},
 								{
 									"key": "driverLicense",
 									"value": "a001",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": null
 					},
 					"response": []
@@ -229,19 +275,28 @@
 				{
 					"name": "localhost:8080/accounts/",
 					"request": {
-						"url": "localhost:8080/accounts/",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\"initialBalance\": \"50\",\n\"accountType\": \"CHECKING\",\n\"clientId\": \"a001\"\n}"
 						},
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
+						},
 						"description": ""
 					},
 					"response": []
@@ -249,19 +304,28 @@
 				{
 					"name": "localhost:8080/accounts/",
 					"request": {
-						"url": "localhost:8080/accounts/",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\"initialBalance\": \"100\",\n\"accountType\": \"SAVING\",\n\"clientId\": \"a001\"\n}"
 						},
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
+						},
 						"description": ""
 					},
 					"response": []
@@ -269,38 +333,27 @@
 				{
 					"name": "localhost:8080/accounts/",
 					"request": {
-						"url": "localhost:8080/accounts/",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\"initialBalance\": \"150\",\n\"accountType\": \"CHECKING\",\n\"clientId\": \"a002\"\n}"
 						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "localhost:8080/accounts/",
-					"request": {
-						"url": "localhost:8080/accounts/",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"initialBalance\": \"50\",\n\"accountType\": \"SAVING\",\n\"clientId\": \"a003\"\n}"
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
 						},
 						"description": ""
 					},
@@ -309,18 +362,56 @@
 				{
 					"name": "localhost:8080/accounts/",
 					"request": {
-						"url": "localhost:8080/accounts/",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"initialBalance\": \"50\",\n\"accountType\": \"SAVING\",\n\"clientId\": \"a003\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/accounts/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\"initialBalance\": \"550\",\n\"accountType\": \"SAVING\",\n\"clientId\": \"a003\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
 						},
 						"description": ""
 					},
@@ -335,10 +426,20 @@
 				{
 					"name": "get all accounts",
 					"request": {
-						"url": "localhost:8080/accounts/",
 						"method": "GET",
 						"header": [],
 						"body": {},
+						"url": {
+							"raw": "localhost:8080/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								""
+							]
+						},
 						"description": ""
 					},
 					"response": []
@@ -346,6 +447,9 @@
 				{
 					"name": "get account by client id",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/accounts?clientId=a001",
 							"host": [
@@ -359,15 +463,10 @@
 								{
 									"key": "clientId",
 									"value": "a001",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -375,10 +474,20 @@
 				{
 					"name": "get account by account id",
 					"request": {
-						"url": "localhost:8080/accounts/eebb2ced",
 						"method": "GET",
 						"header": [],
 						"body": {},
+						"url": {
+							"raw": "localhost:8080/accounts/eebb2ced",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"eebb2ced"
+							]
+						},
 						"description": ""
 					},
 					"response": []
@@ -386,6 +495,9 @@
 				{
 					"name": "get account by balanceFrom",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/accounts?balanceFrom=100",
 							"host": [
@@ -399,15 +511,10 @@
 								{
 									"key": "balanceFrom",
 									"value": "100",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -415,6 +522,9 @@
 				{
 					"name": "get account by balanceTo",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/accounts?balanceFrom=100",
 							"host": [
@@ -428,15 +538,10 @@
 								{
 									"key": "balanceFrom",
 									"value": "100",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -444,6 +549,9 @@
 				{
 					"name": "get account by balanceFrom/To",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"url": {
 							"raw": "localhost:8080/accounts?balanceFrom=100",
 							"host": [
@@ -457,20 +565,62 @@
 								{
 									"key": "balanceFrom",
 									"value": "100",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
-							],
-							"variable": []
+							]
 						},
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": ""
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "saveHelperData",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "showPassword",
+				"value": false,
+				"type": "boolean"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "af2d0b14-53f5-4a7c-8ec8-a024acbb471e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5ab83e8e-36c3-4db2-94bc-0d6fd0ce4a9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

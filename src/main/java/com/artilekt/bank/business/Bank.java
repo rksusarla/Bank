@@ -12,14 +12,17 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 @Component
 public class Bank {
 	private Logger logger = LoggerFactory.getLogger(Bank.class);
 	private List<Account> accounts = new ArrayList<>();
-	private AccountNumberGenerator accountNumberGenerator = AccountNumberGenerator.DEFAULT;
 	
 	public final static Function<BigDecimal, Predicate<Account>> UPPER_RANGE_BALANCE_SELECTOR = amount -> account -> account.getBalance().compareTo(amount) > 0;
 	public final static Function<BigDecimal, Predicate<Account>> LOWER_RANGE_BALANCE_SELECTOR = amount -> account -> account.getBalance().compareTo(amount) < 0;
@@ -27,15 +30,25 @@ public class Bank {
 			(fromAmount, toAmount) -> UPPER_RANGE_BALANCE_SELECTOR.apply(fromAmount).and(LOWER_RANGE_BALANCE_SELECTOR.apply(toAmount));
 	public final static Function<String, Predicate<Account>> ACCOUNT_NUMBER_SELECTOR = accountNumber -> account -> account.getAccountNumber().equals(accountNumber);
 	public final static Function<String, Predicate<Account>> CLIENT_ID_SELECTOR = clientId -> account -> account.getOwner().getClientId().equals(clientId);
-			
-	// Add curried functions for selector by activity (active accounts for the last [timeframe])
-	public final static BiFunction<BigDecimal, Account, BigDecimal> DEFAULT_WITHDRAWL_FEE = (amount, account) -> amount.multiply(new BigDecimal("0.01"));
-	public final static BiFunction<BigDecimal, Account, BigDecimal> DEFAULT_DEPOSIT_FEE   = FeeCalculator.ZERO_FEE;
 
-	
-	private FeeCalculator.Manager feeCalculator = FeeCalculator.create(DEFAULT_WITHDRAWL_FEE, DEFAULT_DEPOSIT_FEE);
+	/** various options of creating an account **/
+	@Autowired
+	private Provider<Account> accountCreator1;
 
-			
+	@Autowired
+	@Qualifier("accountCreator")
+	private Account.Creator accountCreator2;
+    /** end of options                         **/
+
+    /** Account.Factory is used because this allows to create a prototype bean without breaking encapsulation **/
+	@Autowired
+	@Qualifier("accountFactory")
+	private Account.Creator accountCreator3;
+
+	@Autowired
+	private AccountNumberGenerator accountNumberGenerator;
+
+
 	public Account openAccount() {
 		return openAccount(BigDecimal.ZERO, AccountType.CHECKING);
 	}
@@ -49,9 +62,11 @@ public class Bank {
 	}
 		
 	public Account openAccount(BigDecimal initialBalance, AccountType accountType) {
-		Account acc = new Account(accountNumberGenerator.generateAccountNumber(), initialBalance, accountType);
-		acc.setFeeCalculator(feeCalculator);
-		accounts.add(acc); 
+		Account acc = accountCreator3.createAccount(initialBalance, accountType);
+//		acc.setBalance(initialBalance);
+//		acc.setAccountType(accountType);
+//		acc.setAccountNumber(accountNumberGenerator.generateAccountNumber());
+		accounts.add(acc);
 		return acc;
 	}
 	
@@ -76,8 +91,8 @@ public class Bank {
 		throw new AccountNotFoundException("Account ["+accountNumber+"] not found");
 	}
 	
-	public void setWithdrawlFeeCalcAlgo(BiFunction<BigDecimal, Account, BigDecimal> withdrawlFeeCalcAlgo) { feeCalculator.setWithdrawlFeeCalcAlgo(withdrawlFeeCalcAlgo);	}
-	public void setDepositlFeeCalcAlgo (BiFunction<BigDecimal, Account, BigDecimal> depositFeeCalcAlgo)   { feeCalculator.setDepositFeeCalcAlgo(depositFeeCalcAlgo);	}
+//	public void setWithdrawlFeeCalcAlgo(BiFunction<BigDecimal, Account, BigDecimal> withdrawlFeeCalcAlgo) { feeCalculator.setWithdrawlFeeCalcAlgo(withdrawlFeeCalcAlgo);	}
+//	public void setDepositlFeeCalcAlgo (BiFunction<BigDecimal, Account, BigDecimal> depositFeeCalcAlgo)   { feeCalculator.setDepositFeeCalcAlgo(depositFeeCalcAlgo);	}
 	
 	
 }
