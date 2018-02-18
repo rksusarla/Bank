@@ -11,12 +11,23 @@ public interface FeeCalculator {
 
 	public final static FeeCalculator ZERO_FEE_CALCULATOR = create(ZERO_FEE, ZERO_FEE);	
 	
-	public static FeeCalculator.Manager create(BiFunction<BigDecimal, Account, BigDecimal> withdrawlFeeCalcAlgo,
-									           BiFunction<BigDecimal, Account, BigDecimal> depositFeeCalcAlgo) {
-		return new Manager(withdrawlFeeCalcAlgo, depositFeeCalcAlgo);
+	public static FeeCalculator create(BiFunction<BigDecimal, Account, BigDecimal> withdrawlFeeCalcAlgo,
+									   BiFunction<BigDecimal, Account, BigDecimal> depositFeeCalcAlgo) {
+		return new FeeCalculator() {
+			@Override
+			public BigDecimal calculateWithdrawlFee(BigDecimal amount, Account account) {
+				return withdrawlFeeCalcAlgo.apply(amount, account);
+			}
+
+			@Override
+			public BigDecimal calculateDepositFee(BigDecimal amount, Account account) {
+				return depositFeeCalcAlgo.apply(amount, account);
+			}
+		};
 	}
 	
-	
+/*
+
 	public static class Manager implements FeeCalculator {		
 		private BiFunction<BigDecimal, Account, BigDecimal> withdrawlFeeCalcAlgo = ZERO_FEE;
 		private BiFunction<BigDecimal, Account, BigDecimal> depositFeeCalcAlgo   = ZERO_FEE;
@@ -44,7 +55,8 @@ public interface FeeCalculator {
 		}		
 	}
 	
-	
+*/
+
 
 	
 }

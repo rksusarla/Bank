@@ -60,7 +60,11 @@ public class Bank {
 	public Account openAccount(BigDecimal initialBalance) {
 		return openAccount(initialBalance, AccountType.CHECKING);
 	}
-		
+
+	public Account openAccount(int initialBalance, AccountType accountType) {
+		return openAccount(new BigDecimal(initialBalance), accountType);
+	}
+
 	public Account openAccount(BigDecimal initialBalance, AccountType accountType) {
 		Account acc = accountCreator3.createAccount(initialBalance, accountType);
 //		acc.setBalance(initialBalance);
@@ -72,6 +76,10 @@ public class Bank {
 	
 	public BigDecimal getTxnFees() { 
 		return accounts.stream().map(Account::getTxnFee).reduce(new BigDecimal("0.00"), (a, b) -> a.add(b));
+	}
+
+	public int getTotalNumberOfAccounts() {
+		return accounts.size();
 	}
 	
 	public List<Account> listAllAccounts() {

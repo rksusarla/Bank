@@ -14,27 +14,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
             .authorizeRequests()
-            	.antMatchers("/clients/**").hasRole("ADMIN")
-            	.antMatchers("/accounts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/audit/**").hasRole("ADMIN")
+                .antMatchers("/testobjects/**").hasAnyRole("USER", "ADMIN")
 //            	.antMatchers("/echo").authenticated()
                 .anyRequest().permitAll()
                 .and()
             .httpBasic()
                 .and()
-                .csrf().disable()
-            .httpBasic()
-                .and()
-                .headers().frameOptions().disable();
-
-
+            .csrf().disable()
+            .headers().frameOptions().disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
+            .inMemoryAuthentication()
                 .withUser("john").password("smith").roles("USER")
                 .and()
                 .withUser("admin").password("admin").roles("USER", "ADMIN");
