@@ -36,7 +36,7 @@ public class ClientEndpoint {
 //	}
 	
 	@GetMapping
-	public List<Client> searchClients(@RequestParam Map<String, String> searchAttributes) {
+	public List<Client> searchClients(@RequestParam(required=false) Map<String, String> searchAttributes) {
 		
 		Predicate<Client> searchCriteria = client -> {
 			return  (searchAttributes.get("driverLicense") == null || client.getDriverLicense().equalsIgnoreCase(searchAttributes.get("driverLicense"))) &&
